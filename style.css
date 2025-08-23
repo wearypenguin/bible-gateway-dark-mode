@@ -1,51 +1,63 @@
-/* style.css */
-:root { --bg:#0d1117; --panel:#161b22; --text:#e6edf3; --muted:#8b949e; --accent:#58a6ff; --cta:#238636; --ctaHover:#2ea043; }
-
-* { box-sizing: border-box; }
-html,body { margin:0; padding:0; }
 body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  margin: 0;
+  font-family: Arial, sans-serif;
   line-height: 1.6;
-}
-
-header {
-  background: var(--panel);
-  padding: 2.5rem 1rem;
+  background-color: #0d1117;
+  color: #e6edf3;
   text-align: center;
 }
-h1 { margin:0 0 .5rem; font-size: 2.2rem; color: var(--accent); }
-.tagline { margin:0; color: #c9d1d9; }
-
+header img {
+  max-width: -webkit-fill-available;
+}
+.heading { 
+  text-align: center; 
+}
+.store-img {
+  max-height: 12rem;
+}
+.example-img {
+  max-height: 20rem;
+}
+h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: #58a6ff;
+}
+p.tagline {
+  margin: 0.5rem 0 1rem;
+  font-size: 1.2rem;
+  color: #c9d1d9;
+}
 .cta {
-  display:inline-block; margin-top: 1rem; text-decoration: none;
-  background: var(--cta); color:#fff; padding:.85rem 1.4rem; border-radius: 8px; font-weight:600;
+  display: inline-block;
+  background: #238636;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  margin-top: 1rem;
 }
-.cta:hover { background: var(--ctaHover); }
-
-.wrap { max-width: 920px; margin: 2rem auto; padding: 0 1rem; }
-section { margin: 2rem 0; }
-section h2 { color: var(--accent); margin:.25rem 0 .5rem; }
-
-.grid {
-  display:grid; gap:1rem;
-  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+.cta:hover {
+  background: #2ea043;
 }
-.card {
-  background: var(--panel); border-radius: 12px; padding: 1rem 1.2rem; border:1px solid #262b35;
+section {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  text-align: left;
 }
-
-ul,ol { margin:.5rem 0 .5rem 1.25rem; }
-li { margin:.25rem 0; }
-
-.screens {
-  display:grid; gap:1rem; grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+section h2 {
+  color: #58a6ff;
+  margin-bottom: 0.5rem;
 }
-.screens img { width:100%; border-radius:12px; border:1px solid #262b35; display:block; }
-
 footer {
-  background: var(--panel); padding: 1rem; text-align:center;
-  color: var(--muted); font-size:.95rem;
+  background: #161b22;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #8b949e;
 }
-footer a { color: var(--accent); text-decoration:none; }
+footer a {
+  color: #58a6ff;
+  text-decoration: none;
+}
