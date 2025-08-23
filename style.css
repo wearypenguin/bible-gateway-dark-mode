@@ -58,6 +58,6 @@ footer {
   color: #8b949e;
 }
 footer a {
-  color: #58a6ff;
   text-decoration: none;
 }
+a { color: #58a6ff; }
