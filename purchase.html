@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BibleGateway Dark Mode Pro</title>
+  <link rel="preconnect" href="https://js.stripe.com" crossorigin>
+  <style>
+    :root{--bg:#0f1115;--panel:#161922;--text:#e6e6e6;--muted:#9aa3b2;--accent:#6ea8fe}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:linear-gradient(180deg,#0c0e12,#0f1115);color:var(--text)}
+    .wrap{max-width:860px;margin:0 auto;padding:32px 20px}
+    header{display:flex;gap:16px;align-items:center;}
+    .logo{width:40px;height:40px;border-radius:8px;background:#111;border:1px solid #2a2f3a;display:grid;place-items:center}
+    .panel{background:var(--panel);border:1px solid #242a36;border-radius:12px;padding:18px}
+    .grid{display:grid;gap:18px;grid-template-columns:1fr}
+    @media(min-width:900px){.grid{grid-template-columns:1.2fr .8fr}}
+    h1{font-size:28px;margin:0 0 2px}
+    h2{font-size:18px;margin:0 0 8px}
+    p{margin:8px 0;color:var(--muted)}
+    ul{margin:8px 0 0 18px}
+    li{margin:6px 0}
+    a{color:var(--accent)}
+    .buy{display:grid;gap:14px}
+    .note{font-size:13px;color:#aab4c3}
+    code{background:#0c0e12;border:1px solid #202533;border-radius:6px;padding:2px 6px}
+    .small{font-size:12px;color:#97a3b4}
+  </style>
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+</head>
+<body>
+    <div class="topbar" style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#0f1115;border-bottom:1px solid #1f2530;">
+        <div style="display:flex;gap:10px;align-items:center;">
+        <a href="index.html" style="color:#6ea8fe;text-decoration:none;display:flex;align-items:center;gap:8px;">
+            <span style="font-size:18px;">←</span> <span>Back to Home</span>
+        </a>
+        </div>
+        <nav style="display:flex;gap:14px;">
+        <a href="index.html" style="color:#6ea8fe;">Home</a>
+        </nav>
+    </div>
+  <div class="wrap">
+    <header>
+      <div class="logo">🌙</div>
+      <div>
+        <h1>BibleGateway Dark Mode Pro</h1>
+        <p>Softer reds, clean contrast, and adjustable brightness for long reads.</p>
+      </div>
+    </header>
+    <div class="grid" style="margin-top:18px;">
+      <section class="panel">
+        <h2>What You Get</h2>
+        <ul>
+          <li><b>Custom brightness sliders</b>: Background darkness and text lightness.</li>
+          <li><b>Contrast guard</b>: Keeps text readable while you tweak.</li>
+          <li><b>Per‑site polish</b>: Targeted fixes across BibleGateway layouts.</li>
+          <li><b>One‑click toggle</b>: Persisted across pages; no tracking, ever.</li>
+          <li><b>Friendly support</b>: Quick fixes for pages that look off.</li>
+        </ul>
+        <p class="small">Free core stays free: the basic dark theme and toggle remain available for everyone.</p>
+      </section>
+
+      <aside class="panel buy">
+        <div>
+          <h2>Buy Pro – $5</h2>
+          <!-- Replace the two values below from Stripe Dashboard → Buy Button -->
+          <stripe-buy-button
+            buy-button-id="buy_btn_1SaqNARwGmtyFxuJ6dxuPV0l"
+            publishable-key="pk_test_51SZ39ARwGmtyFxuJG2mB2aGV17zPMnT5jyvKwNkAI2NrE258QT83tl8syxxDcUkZZeB0f36aWmHaSwK5WxUz5UMH00UUzrGJGr">
+          </stripe-buy-button>
+          <!-- Fallback: if you don't yet have a Buy Button snippet or publishable key, replace XYZ_PAYMENT_LINK with your Payment Link URL (visible in the Payment Links dashboard). --/>
+          <p style="margin-top:10px;">
+            <a id="paymentLinkFallback" href="https://buy.stripe.com/4gM00lfFn92hd3XeWFbwk00" style="display:inline-block;padding:10px 14px;background:#6ea8fe;color:#0f1115;border-radius:6px;text-decoration:none;font-weight:600;">Purchase via Stripe (Direct Link)</a>
+          </p-->
+          <script>
+            window.addEventListener('load', () => {
+              const btn = document.querySelector('stripe-buy-button');
+              const fallback = document.getElementById('paymentLinkFallback');
+              if (btn && btn.getAttribute('buy-button-id') !== 'REPLACE_WITH_BUY_BUTTON_ID' && btn.getAttribute('publishable-key') !== 'REPLACE_WITH_PUBLISHABLE_KEY') {
+                // fallback.style.display = 'none'; // uncomment to hide once Buy Button configured
+              }
+            });
+          </script>
+          <p class="note">No account needed. Card, Apple Pay, or Google Pay via Stripe.</p>
+        </div>
+        <div class="note">
+          Having trouble? Email or open a GitHub issue and we’ll help.
+        </div>
+      </aside>
+    </div>
+
+    <section class="panel" style="margin-top:18px;">
+      <h2>After Purchase</h2>
+      <ul>
+        <li>Complete payment and arrive at the Thank‑You page (or follow the link in your email).</li>
+        <li>Your license key (format <code>BGDM-AB12-CD34</code>) is displayed or emailed to you.</li>
+        <li>Open the extension popup, paste the key into <b>Unlock Pro</b>, then press Unlock.</li>
+        <li>The brightness sliders appear instantly; tweak background and text levels.</li>
+        <li>If no key appears within a minute, email your receipt for a manual resend.</li>
+      </ul>
+    </section>
+
+    <p class="small" style="margin-top:18px;">Hosting on GitHub Pages. Stripe Buy Button is safe to use on static sites.</p>
+    <p class="small"><a href="index.html" style="color:#6ea8fe;">← Back to Home</a></p>
+  </div>
+</body>
+</html>

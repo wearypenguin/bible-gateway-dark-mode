@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thank You – BibleGateway Dark Mode Pro</title>
+  <style>
+    body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:#0f1115;color:#e6e6e6;}
+    .wrap{max-width:760px;margin:0 auto;padding:40px 22px;}
+    h1{margin:0 0 12px;font-size:30px;}
+    h2{margin:32px 0 10px;font-size:20px;}
+    p{line-height:1.5;margin:10px 0;color:#aab4c3;}
+    code{background:#181d25;padding:2px 6px;border-radius:5px;font-size:14px;}
+    .panel{background:#161b24;border:1px solid #222a34;padding:22px;border-radius:14px;margin-top:26px;}
+    .license-sample{font-size:15px;font-weight:600;color:#fff;letter-spacing:.5px;}
+    ul{margin:10px 0 20px 18px;padding:0;}
+    li{margin:4px 0;color:#d2d8e1;}
+    a{color:#6ea8fe;}
+    footer{margin-top:50px;font-size:12px;color:#8593a3;}
+    input[type=text]{width:100%;padding:10px 12px;background:#0f1319;border:1px solid #28313d;border-radius:8px;color:#dce4ec;margin-top:6px;}
+    button{background:#6ea8fe;color:#0f1115;border:none;padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;margin-top:10px;}
+    .result{margin-top:10px;font-size:14px;color:#9fb6cc;word-break:break-all;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar" style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#0f1115;border-bottom:1px solid #1f2530;border-radius:0 0 12px 12px;margin:-40px -22px 30px -22px;">
+      <nav style="display:flex;gap:16px;">
+        <a href="index.html" style="color:#6ea8fe;text-decoration:none;">Home</a>
+        <a href="purchase.html" style="color:#6ea8fe;text-decoration:none;">Purchase</a>
+      </nav>
+    </div>
+    <h1>Thank You!</h1>
+    <p>Your support helps keep the dark theme polished, fast, and privacy‑respecting. Below are steps to unlock the Pro sliders.</p>
+
+    <div class="panel">
+      <h2>1. Get Your License Key</h2>
+      <p>In this early release, keys are issued manually within a few hours (usually faster). We generate a code based on your payment email and send it to you. Upcoming automation will let you self‑serve instantly.</p>
+      <p class="license-sample">Format: <code>BGDM-AB12-CD34</code></p>
+      <ul>
+        <li>Check your inbox (and spam) for an email with your key.</li>
+        <li>If you don’t have it yet, you can email us with your Payment Link receipt.</li>
+        <li>Keep the key private; it enables the sliders locally.</li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h2>2. Unlock in the Extension</h2>
+      <ul>
+        <li>Open the extension popup.</li>
+        <li>Enter your license key in the “Unlock Pro” field.</li>
+        <li>Press Unlock; the Pro Palette sliders appear.</li>
+        <li>Use Reset to return to default contrast anytime.</li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h2>3. Didn’t Receive a Key?</h2>
+      <p>Send your payment email or receipt ID and we’ll resend a key promptly.</p>
+      <p>Email: <a href="mailto:your-support@example.com">your-support@example.com</a></p>
+    </div>
+
+    <div class="panel">
+      <h2>Roadmap</h2>
+      <ul>
+        <li>Instant key delivery (webhook automation).</li>
+        <li>Optional account portal for reissuing lost keys.</li>
+        <li>More palette controls and typography presets.</li>
+      </ul>
+    </div>
+
+    <footer>
+      No tracking. Your email is only used for sending a license key and support follow‑ups.
+    </footer>
+  </div>
+  <script>
+    // Auto-fetch a license when redirected with ?session_id=cs_...
+    (async () => {
+      try {
+        const p = new URLSearchParams(location.search);
+        const id = p.get('session_id');
+        if (!id) return;
+        const endpoint = 'https://bgdm-license-worker.pamuszynski.workers.dev/license?session_id=' + encodeURIComponent(id);
+        const res = await fetch(endpoint, { cache: 'no-store' });
+        const data = await res.json();
+        if (data && data.license) {
+          const panel = document.createElement('div');
+          panel.className = 'panel';
+          panel.innerHTML = '<h2>Your License</h2><p class="license-sample"><code>' + data.license + '</code></p><p>Open the extension popup and paste this under “Unlock Pro”.</p>';
+          document.querySelector('.wrap').appendChild(panel);
+        }
+      } catch (e) { /* silent */ }
+    })();
+  </script>
+</body>
+</html>
