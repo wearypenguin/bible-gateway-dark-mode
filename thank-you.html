@@ -33,33 +33,24 @@
       </nav>
     </div>
     <h1>Thank You!</h1>
-    <p>Your support helps keep the dark theme polished, fast, and privacy‑respecting. If you purchased just now, your license should appear below automatically.</p>
+    <p>Your support helps keep the dark theme polished, fast, and privacy‑respecting.</p>
+
+    <!-- License panel appears here -->
+    <div id="license-container"></div>
 
     <div class="panel">
-      <h2>1. Get Your License Key</h2>
-      <p>If redirected here from Stripe Checkout, we’ll fetch your license using the session ID and show it below. You’ll also receive the code by email shortly.</p>
-      <p class="license-sample">Example format: <code>BGDM-AB12-CD34</code></p>
-      <ul>
-        <li>If it doesn’t appear within ~15 seconds, refresh the page.</li>
-        <li>Still no code? Email us with your payment email or receipt.</li>
-        <li>Keep the key private; it enables the sliders locally.</li>
-      </ul>
-    </div>
-
-    <div class="panel">
-      <h2>2. Unlock in the Extension</h2>
+      <h2>1. Unlock in the Extension</h2>
       <ul>
         <li>Open the extension popup.</li>
-        <li>Enter your license key in the “Unlock Pro” field.</li>
+        <li>Enter your license key in the "Unlock Pro" field.</li>
         <li>Press Unlock; the Pro Palette sliders appear.</li>
-        <li>Use Reset to return to default contrast anytime.</li>
       </ul>
     </div>
 
     <div class="panel">
-      <h2>3. Didn’t Receive a Key?</h2>
-      <p>Send your payment email or receipt ID and we’ll resend a key promptly.</p>
-      <p>Email: <a href="mailto:your-support@example.com">your-support@example.com</a></p>
+      <h2>2. Didn't Receive a Key?</h2>
+      <p>Email me and I'll send a key promptly if I can verify a stripe payment from your email address.</p>
+      <p>Email: <a href="mailto:pamuszynski@gmail.com">pamuszynski@gmail.com</a></p>
     </div>
 
     <div class="panel">
@@ -81,31 +72,32 @@
       const p = new URLSearchParams(location.search);
       const id = p.get('session_id');
       if (!id) return;
-      // TODO: Replace with your deployed Worker URL
       const WORKER_BASE = 'https://bgdm-license-worker.pamuszynski.workers.dev';
       const endpoint = WORKER_BASE + '/license?session_id=' + encodeURIComponent(id);
-      const wrap = document.querySelector('.wrap');
-      const status = document.createElement('div');
-      status.innerHTML = '<p class="result">Fetching your license…</p><div class="progress"><div class="bar" style="width:10%"></div></div>';
-      wrap.appendChild(status);
+      const container = document.getElementById('license-container');
+      
+      // Show prominent loading state at top
+      const loadingPanel = document.createElement('div');
+      loadingPanel.className = 'panel';
+      loadingPanel.style.background = '#1a2533';
+      loadingPanel.style.borderColor = '#2a3f5f';
+      loadingPanel.innerHTML = '<h2 style="margin-top:0;">🔑 Your License Key</h2><p class="result">Fetching your license code…</p><div class="progress"><div class="bar" style="width:10%"></div></div>';
+      container.appendChild(loadingPanel);
+      
       try {
         const res = await fetch(endpoint, { cache: 'no-store' });
-        status.querySelector('.bar').style.width = '60%';
+        loadingPanel.querySelector('.bar').style.width = '60%';
         const data = await res.json();
         if (data && data.license) {
-          const panel = document.createElement('div');
-          panel.className = 'panel';
-          panel.innerHTML = '<h2>Your License</h2><p class="license-sample"><code>' + data.license + '</code></p><p>Open the extension popup and paste this under “Unlock Pro”.</p>';
-          wrap.appendChild(panel);
-          status.querySelector('.bar').style.width = '100%';
-          status.querySelector('.result').textContent = 'License loaded.';
+          loadingPanel.querySelector('.bar').style.width = '100%';
+          loadingPanel.innerHTML = '<h2 style="margin-top:0;color:#5cb85c;">✅ Your License Key</h2><p style="font-size:22px;font-weight:700;color:#fff;letter-spacing:1px;margin:16px 0;padding:18px;background:#0d1117;border:2px solid #30363d;border-radius:8px;text-align:center;">' + data.license + '</p><p><strong>Next step:</strong> Open the extension popup, paste this key into "Unlock Pro", and click Unlock. The Pro Palette sliders will appear instantly.</p>';
         } else {
-          status.querySelector('.bar').style.width = '0%';
-          status.querySelector('.result').textContent = 'Could not fetch a license yet. Please refresh or contact support.';
+          loadingPanel.querySelector('.bar').style.width = '0%';
+          loadingPanel.innerHTML = '<h2 style="margin-top:0;color:#d9534f;">⚠️ License Not Ready</h2><p>Could not fetch your license yet. Please refresh this page in a few seconds, or contact support with your payment email.</p>';
         }
       } catch (e) {
-        status.querySelector('.bar').style.width = '0%';
-        status.querySelector('.result').textContent = 'Network error fetching license. Please try again.';
+        loadingPanel.querySelector('.bar').style.width = '0%';
+        loadingPanel.innerHTML = '<h2 style="margin-top:0;color:#d9534f;">⚠️ Network Error</h2><p>Could not connect to the license server. Please check your connection and refresh the page.</p>';
       }
     })();
   </script>
