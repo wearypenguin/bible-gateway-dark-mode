@@ -31,15 +31,15 @@
       </nav>
     </div>
     <h1>Thank You!</h1>
-    <p>Your support helps keep the dark theme polished, fast, and privacy‑respecting. Below are steps to unlock the Pro sliders.</p>
+    <p>Your support helps keep the dark theme polished, fast, and privacy‑respecting. If you purchased just now, your license should appear below automatically.</p>
 
     <div class="panel">
       <h2>1. Get Your License Key</h2>
-      <p>In this early release, keys are issued manually within a few hours (usually faster). We generate a code based on your payment email and send it to you. Upcoming automation will let you self‑serve instantly.</p>
-      <p class="license-sample">Format: <code>BGDM-AB12-CD34</code></p>
+      <p>If redirected here from Stripe Checkout, we’ll fetch your license using the session ID and show it below. You’ll also receive the code by email shortly.</p>
+      <p class="license-sample">Example format: <code>BGDM-AB12-CD34</code></p>
       <ul>
-        <li>Check your inbox (and spam) for an email with your key.</li>
-        <li>If you don’t have it yet, you can email us with your Payment Link receipt.</li>
+        <li>If it doesn’t appear within ~15 seconds, refresh the page.</li>
+        <li>Still no code? Email us with your payment email or receipt.</li>
         <li>Keep the key private; it enables the sliders locally.</li>
       </ul>
     </div>
@@ -76,20 +76,32 @@
   <script>
     // Auto-fetch a license when redirected with ?session_id=cs_...
     (async () => {
+      const p = new URLSearchParams(location.search);
+      const id = p.get('session_id');
+      if (!id) return;
+      // TODO: Replace with your deployed Worker URL
+      const WORKER_BASE = 'https://bgdm-license-worker.pamuszynski.workers.dev';
+      const endpoint = WORKER_BASE + '/license?session_id=' + encodeURIComponent(id);
+      const wrap = document.querySelector('.wrap');
+      const status = document.createElement('p');
+      status.className = 'result';
+      status.textContent = 'Fetching your license…';
+      wrap.appendChild(status);
       try {
-        const p = new URLSearchParams(location.search);
-        const id = p.get('session_id');
-        if (!id) return;
-        const endpoint = 'https://bgdm-license-worker.pamuszynski.workers.dev/license?session_id=' + encodeURIComponent(id);
         const res = await fetch(endpoint, { cache: 'no-store' });
         const data = await res.json();
         if (data && data.license) {
           const panel = document.createElement('div');
           panel.className = 'panel';
           panel.innerHTML = '<h2>Your License</h2><p class="license-sample"><code>' + data.license + '</code></p><p>Open the extension popup and paste this under “Unlock Pro”.</p>';
-          document.querySelector('.wrap').appendChild(panel);
+          wrap.appendChild(panel);
+          status.textContent = 'License loaded.';
+        } else {
+          status.textContent = 'Could not fetch a license yet. Please refresh or contact support.';
         }
-      } catch (e) { /* silent */ }
+      } catch (e) {
+        status.textContent = 'Network error fetching license. Please try again.';
+      }
     })();
   </script>
 </body>
