@@ -20,6 +20,8 @@
     input[type=text]{width:100%;padding:10px 12px;background:#0f1319;border:1px solid #28313d;border-radius:8px;color:#dce4ec;margin-top:6px;}
     button{background:#6ea8fe;color:#0f1115;border:none;padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;margin-top:10px;}
     .result{margin-top:10px;font-size:14px;color:#9fb6cc;word-break:break-all;}
+    .progress{height:6px;background:#1a2230;border-radius:6px;overflow:hidden;margin:8px 0 0 0;}
+    .bar{height:100%;width:0;background:#6ea8fe;transition:width .3s ease;}
   </style>
 </head>
 <body>
@@ -83,24 +85,27 @@
       const WORKER_BASE = 'https://bgdm-license-worker.pamuszynski.workers.dev';
       const endpoint = WORKER_BASE + '/license?session_id=' + encodeURIComponent(id);
       const wrap = document.querySelector('.wrap');
-      const status = document.createElement('p');
-      status.className = 'result';
-      status.textContent = 'Fetching your license…';
+      const status = document.createElement('div');
+      status.innerHTML = '<p class="result">Fetching your license…</p><div class="progress"><div class="bar" style="width:10%"></div></div>';
       wrap.appendChild(status);
       try {
         const res = await fetch(endpoint, { cache: 'no-store' });
+        status.querySelector('.bar').style.width = '60%';
         const data = await res.json();
         if (data && data.license) {
           const panel = document.createElement('div');
           panel.className = 'panel';
           panel.innerHTML = '<h2>Your License</h2><p class="license-sample"><code>' + data.license + '</code></p><p>Open the extension popup and paste this under “Unlock Pro”.</p>';
           wrap.appendChild(panel);
-          status.textContent = 'License loaded.';
+          status.querySelector('.bar').style.width = '100%';
+          status.querySelector('.result').textContent = 'License loaded.';
         } else {
-          status.textContent = 'Could not fetch a license yet. Please refresh or contact support.';
+          status.querySelector('.bar').style.width = '0%';
+          status.querySelector('.result').textContent = 'Could not fetch a license yet. Please refresh or contact support.';
         }
       } catch (e) {
-        status.textContent = 'Network error fetching license. Please try again.';
+        status.querySelector('.bar').style.width = '0%';
+        status.querySelector('.result').textContent = 'Network error fetching license. Please try again.';
       }
     })();
   </script>
