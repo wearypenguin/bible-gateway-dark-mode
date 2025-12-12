@@ -43,7 +43,7 @@
       <ul>
         <li>Open the extension popup.</li>
         <li>Enter your license key in the "Unlock Pro" field.</li>
-        <li>Press Unlock; the Pro Palette sliders appear.</li>
+        <li>Press "Unlock Pro". The Pro sliders will appear.</li>
       </ul>
     </div>
 
@@ -56,9 +56,8 @@
     <div class="panel">
       <h2>Roadmap</h2>
       <ul>
-        <li>Instant key delivery (webhook automation).</li>
-        <li>Optional account portal for reissuing lost keys.</li>
-        <li>More palette controls and typography presets.</li>
+        <li>More color controls.</li>
+        <li>Instant backup key delivery via email.</li>
       </ul>
     </div>
 
@@ -90,7 +89,7 @@
         const data = await res.json();
         if (data && data.license) {
           loadingPanel.querySelector('.bar').style.width = '100%';
-          loadingPanel.innerHTML = '<h2 style="margin-top:0;color:#5cb85c;">✅ Your License Key</h2><p style="font-size:22px;font-weight:700;color:#fff;letter-spacing:1px;margin:16px 0;padding:18px;background:#0d1117;border:2px solid #30363d;border-radius:8px;text-align:center;">' + data.license + '</p><p><strong>Next step:</strong> Open the extension popup, paste this key into "Unlock Pro", and click Unlock. The Pro Palette sliders will appear instantly.</p>';
+          loadingPanel.innerHTML = '<h2 style="margin-top:0;color:#5cb85c;">✅ Your License Key</h2><p style="font-size:22px;font-weight:700;color:#fff;letter-spacing:1px;margin:16px 0;padding:18px;background:#0d1117;border:2px solid #30363d;border-radius:8px;text-align:center;">' + data.license + '</p><p><strong>Next step:</strong> Open the extension popup, paste this key into the "License" field, and click "Unlock Pro".</p>';
         } else {
           loadingPanel.querySelector('.bar').style.width = '0%';
           loadingPanel.innerHTML = '<h2 style="margin-top:0;color:#d9534f;">⚠️ License Not Ready</h2><p>Could not fetch your license yet. Please refresh this page in a few seconds, or contact support with your payment email.</p>';
