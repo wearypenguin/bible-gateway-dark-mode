@@ -34,6 +34,7 @@
     </div>
     <h1>Thank You!</h1>
     <p>Your support helps keep the dark theme polished, fast, and privacy‑respecting.</p>
+    <p style="background:#1a2533;border:1px solid #2a3f5f;border-radius:8px;padding:12px;margin:16px 0;">📧 <strong>Check your email!</strong> Your license key has been sent to the email you used for payment.</p>
 
     <!-- License panel appears here -->
     <div id="license-container"></div>
@@ -48,16 +49,22 @@
     </div>
 
     <div class="panel">
-      <h2>2. Didn't Receive a Key?</h2>
-      <p>Email me and I'll send a key promptly if I can verify a stripe payment from your email address.</p>
-      <p>Email: <a href="mailto:pamuszynski@gmail.com">pamuszynski@gmail.com</a></p>
+      <h2>2. Can't Find Your License?</h2>
+      <ul>
+        <li><strong>Check your email</strong> (including spam/junk folder) for "Your BibleGateway Dark Mode Pro License"</li>
+        <li>Your license is also displayed above on this page</li>
+        <li>If you closed this page, check your email for the code</li>
+        <li>Still need help? Email <a href="mailto:pamuszynski@gmail.com">pamuszynski@gmail.com</a> with your payment email address</li>
+      </ul>
     </div>
 
     <div class="panel">
-      <h2>Roadmap</h2>
+      <h2>Using on Multiple Devices?</h2>
+      <p>Your license works on unlimited computers. Just check your email for the license code and enter it on each device.</p>
+      <h2 style="margin-top:20px;">Roadmap</h2>
       <ul>
-        <li>More color controls.</li>
-        <li>Instant backup key delivery via email.</li>
+        <li>More color controls and theme presets</li>
+        <li>Red letter text customization</li>
       </ul>
     </div>
 
@@ -89,7 +96,7 @@
         const data = await res.json();
         if (data && data.license) {
           loadingPanel.querySelector('.bar').style.width = '100%';
-          loadingPanel.innerHTML = '<h2 style="margin-top:0;color:#5cb85c;">✅ Your License Key</h2><p style="font-size:22px;font-weight:700;color:#fff;letter-spacing:1px;margin:16px 0;padding:18px;background:#0d1117;border:2px solid #30363d;border-radius:8px;text-align:center;">' + data.license + '</p><p><strong>Next step:</strong> Open the extension popup, paste this key into the "License" field, and click "Unlock Pro".</p>';
+          loadingPanel.innerHTML = '<h2 style="margin-top:0;color:#5cb85c;">✅ Your License Key</h2><p style="font-size:22px;font-weight:700;color:#fff;letter-spacing:1px;margin:16px 0;padding:18px;background:#0d1117;border:2px solid #30363d;border-radius:8px;text-align:center;">' + data.license + '</p><p><strong>Next step:</strong> Open the extension popup, paste this key into the "License" field, and click "Unlock Pro".</p><p style="font-size:13px;color:#9fb6cc;margin-top:12px;">💡 This code has also been emailed to you for safekeeping.</p>';
         } else {
           loadingPanel.querySelector('.bar').style.width = '0%';
           loadingPanel.innerHTML = '<h2 style="margin-top:0;color:#d9534f;">⚠️ License Not Ready</h2><p>Could not fetch your license yet. Please refresh this page in a few seconds, or contact support with your payment email.</p>';
